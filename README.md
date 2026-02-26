@@ -1,4 +1,4 @@
-# 🛍️ BAKIFLOW - Ecommerce de Ropa Seminueva
+# BAKIFLOW - Ecommerce de Ropa Seminueva
 
 **Concepto:** Dale vida a la ropa nuevamente
 
@@ -6,7 +6,7 @@ Plataforma web para comprar y vender ropa seminueva de calidad, dándole una seg
 
 ---
 
-## 📋 Contenido
+## Contenido
 
 - [Descripción](#descripción)
 - [Tecnologías](#tecnologías)
@@ -221,7 +221,7 @@ Deberías ver la tienda BAKIFLOW con los productos.
 
 ---
 
-## ✅ Resumen de Comandos
+## Resumen de Comandos
 
 Una vez todo configurado, este es el flujo diario:
 
