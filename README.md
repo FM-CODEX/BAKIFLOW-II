@@ -68,13 +68,10 @@ BAKIFLOW es una tienda en línea de ropa seminueva que permite a los usuarios:
 Requisitos:
 
 - [x] **Docker Desktop** (para la base de datos)
-  - Descarga: https://www.docker.com/products/docker-desktop/
   
 - [x] **Python 3.10+** (recomendado 3.11)
-  - Descarga: https://www.python.org/downloads/
   
 - [x] **Conda** (opcional pero recomendado)
-  - Descarga: https://docs.conda.io/en/latest/miniconda.html
 
 ### Verificar instalaciones:
 
