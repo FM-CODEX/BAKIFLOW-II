@@ -19,7 +19,7 @@ DB_CONFIG = {
     'port': 5432,
     'database': 'bakiflow_db',
     'user': 'bakiflow',
-    'password': 'Eslmqcerd0101'
+    'password': 'bakiflow123'
 }
 
 # Función A: Conectar a la BD
