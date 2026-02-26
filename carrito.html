@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - BAKIFLOW</title>
+    <link rel="stylesheet" href="styles-carrito.css">
+</head>
+<body>
+    
+    <!-- Encabezado -->
+    <header>
+        <h1>🛒 Mi Carrito</h1>
+        <p class="subtitle">Revisa tus productos antes de comprar</p>
+        <nav>
+            <a href="index.html">← Volver a la tienda</a>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        
+        <!-- Mensaje cuando está vacío -->
+        <div id="carrito-vacio" style="display: none;">
+            <p>Tu carrito está vacío 😔</p>
+            <a href="index.html" class="btn">Ir a comprar</a>
+        </div>
+
+        <!-- Contenedor del carrito -->
+        <div id="carrito-container">
+            <p id="mensaje-carga">Cargando carrito...</p>
+        </div>
+
+        <!-- Resumen de compra -->
+        <aside id="resumen-compra" style="display: none;">
+            <h3>Resumen de Compra</h3>
+            <div class="resumen-detalle">
+                <p>Total de items: <span id="total-items">0</span></p>
+                <p class="total">Total a pagar: <span id="total-precio">$0.00</span> MXN</p>
+            </div>
+            <button class="btn-comprar" onclick="procederCompra()">Proceder a Comprar</button>
+            <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar Carrito</button>
+        </aside>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        const API_URL = 'http://127.0.0.1:3000';
+
+        //Cargar carrito al inicio
+        async function cargarCarrito() {
+            console.log('Cargando carrito...');
+            
+            try {
+                const response = await fetch(`${API_URL}/carrito`);
+                const data = await response.json();
+                
+                console.log('Carrito recibido:', data);
+                
+                if (data.success) {
+                    if (data.items.length === 0) {
+                        mostrarCarritoVacio();
+                    } else {
+                        mostrarCarrito(data.items, data.total, data.cantidad_items);
+                    }
+                } else {
+                    console.error('Error:', data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error al cargar carrito:', error);
+                document.getElementById('mensaje-carga').textContent = 
+                    'Error al cargar el carrito. ¿Está corriendo el backend?';
+            }
+        }
+
+      //Mostrar carrito vacio
+        function mostrarCarritoVacio() {
+            document.getElementById('carrito-container').style.display = 'none';
+            document.getElementById('resumen-compra').style.display = 'none';
+            document.getElementById('carrito-vacio').style.display = 'block';
+        }
+
+       //Mostrar articulos del carrito
+        function mostrarCarrito(items, total, cantidadItems) {
+            const container = document.getElementById('carrito-container');
+            container.innerHTML = '';
+            
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'carrito-item';
+                
+                itemDiv.innerHTML = `
+                    <img src="${item.imagen_url}" alt="${item.nombre}">
+                    
+                    <div class="item-info">
+                        <h3>${item.nombre}</h3>
+                        <p class="categoria">${item.categoria} - Talla ${item.talla}</p>
+                        <p class="precio">$${parseFloat(item.precio).toFixed(2)} MXN</p>
+                    </div>
+                    
+                    <div class="item-cantidad">
+                        <p>Cantidad: <strong>${item.cantidad}</strong></p>
+                        <p class="subtotal">Subtotal: $${parseFloat(item.subtotal).toFixed(2)} MXN</p>
+                    </div>
+                    
+                    <button class="btn-eliminar" onclick="eliminarDelCarrito(${item.carrito_id})">
+                        🗑️ Eliminar
+                    </button>
+                `;
+                
+                container.appendChild(itemDiv);
+            });
+            
+            // Mostrar resumen
+            document.getElementById('total-items').textContent = cantidadItems;
+            document.getElementById('total-precio').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('resumen-compra').style.display = 'block';
+            document.getElementById('carrito-vacio').style.display = 'none';
+        }
+
+     //Eliminar articulo del carrito
+        async function eliminarDelCarrito(carritoId) {
+            if (!confirm('¿Eliminar este producto del carrito?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/carrito/${carritoId}`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    console.log('Producto eliminado');
+                    cargarCarrito(); // Recargar carrito
+                } else {
+                    alert('Error: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error al eliminar:', error);
+                alert('Error al eliminar el producto');
+            }
+        }
+
+     //Vacíar el carrito
+        async function vaciarCarrito() {
+            if (!confirm('¿Vaciar todo el carrito?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/carrito`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    console.log('Carrito vaciado');
+                    mostrarCarritoVacio();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error al vaciar carrito:', error);
+                alert('Error al vaciar el carrito');
+            }
+        }
+
+
+//Continar con la compra
+        function procederCompra() {
+            alert('¡Gracias por tu compra en BAKIFLOW! \n\nEsta funcionalidad se implementará en la siguiente fase del proyecto.');
+            // Tengo que hacer las funciones de pago y orden
+        }
+
+        //Ejecución
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Carrito BAKIFLOW cargado');
+            cargarCarrito();
+        });
+        
+    </script>
+    
+</body>
+</html>

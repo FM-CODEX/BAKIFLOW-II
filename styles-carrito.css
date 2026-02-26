@@ -1,0 +1,246 @@
+/* ==========================================
+   BAKIFLOW - ESTILOS DEL CARRITO
+   ========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Encabezado */
+header {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+nav a {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #2980b9;
+}
+
+/* Contenido principal */
+main {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+/* Carrito vacío */
+#carrito-vacio {
+    grid-column: 1 / -1;
+    text-align: center;
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+}
+
+#carrito-vacio p {
+    font-size: 1.5rem;
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+}
+
+/* Container del carrito */
+#carrito-container {
+    grid-column: 1;
+}
+
+#mensaje-carga {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    color: #7f8c8d;
+}
+
+/* Item del carrito */
+.carrito-item {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 100px 1fr auto auto;
+    gap: 1.5rem;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.carrito-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.item-info h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.categoria {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.precio {
+    color: #27ae60;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.item-cantidad {
+    text-align: right;
+}
+
+.item-cantidad p {
+    margin-bottom: 0.5rem;
+}
+
+.subtotal {
+    color: #27ae60;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b;
+}
+
+/* Resumen de compra */
+#resumen-compra {
+    grid-column: 2;
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+}
+
+#resumen-compra h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.resumen-detalle p {
+    margin: 0.5rem 0;
+    color: #7f8c8d;
+}
+
+.resumen-detalle .total {
+    font-size: 1.3rem;
+    color: #27ae60;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #ecf0f1;
+}
+
+/* Botones principales */
+.btn, .btn-comprar, .btn-vaciar {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+}
+
+.btn, .btn-comprar {
+    background-color: #27ae60;
+    color: white;
+}
+
+.btn:hover, .btn-comprar:hover {
+    background-color: #229954;
+}
+
+.btn-vaciar {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-vaciar:hover {
+    background-color: #7f8c8d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+    
+    #carrito-container {
+        grid-column: 1;
+    }
+    
+    #resumen-compra {
+        grid-column: 1;
+        position: relative;
+        top: 0;
+    }
+    
+    .carrito-item {
+        grid-template-columns: 80px 1fr;
+        gap: 1rem;
+    }
+    
+    .item-cantidad {
+        grid-column: 1 / -1;
+        text-align: left;
+        margin-top: 0.5rem;
+    }
+    
+    .btn-eliminar {
+        grid-column: 1 / -1;
+        margin-top: 0.5rem;
+    }
+}

@@ -1,0 +1,66 @@
+# ==========================================
+# DOCKER COMPOSE - BAKIFLOW CON pgAdmin
+# ==========================================
+# Levanta PostgreSQL + pgAdmin (interfaz web)
+#
+# Para usar:
+#   docker-compose up -d
+#
+# Acceder:
+#   Base de datos: localhost:5432
+#   pgAdmin: http://localhost:8080
+
+version: '3.8'
+
+services:
+# Servicio 1: Postgres Base de datos
+  postgres:
+    image: postgres:15-alpine
+    container_name: bakiflow_db
+    restart: always
+    environment:
+      POSTGRES_USER: bakiflow
+      POSTGRES_PASSWORD: bakiflow123
+      POSTGRES_DB: bakiflow_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bakiflow_network
+
+#Servicio 2: pgAdmin Interfaz web
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: bakiflow_pgadmin
+    restart: always
+    environment:
+      # Email y contraseña para entrar a pgAdmin
+      PGADMIN_DEFAULT_EMAIL: admin@bakiflow.com
+      PGADMIN_DEFAULT_PASSWORD: DinoBakiFlow
+      # Deshabilita el modo maestro (más simple)
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      # Puerto donde accedes en el navegador
+      - "8080:80"
+    volumes:
+      # Guarda configuración para no perderla
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - bakiflow_network
+    depends_on:
+      - postgres
+
+#Volumen de almacenamiento persistente
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+#Red para que los servicios se comuniquen
+networks:
+  bakiflow_network:
+    driver: bridge

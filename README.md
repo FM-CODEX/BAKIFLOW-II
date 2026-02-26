@@ -19,7 +19,7 @@ Plataforma web para comprar y vender ropa seminueva de calidad, dándole una seg
 
 ---
 
-## 📖 Descripción
+## Descripción
 
 BAKIFLOW es una tienda en línea de ropa seminueva que permite a los usuarios:
 - Explorar un catálogo de prendas de segunda mano
@@ -29,7 +29,7 @@ BAKIFLOW es una tienda en línea de ropa seminueva que permite a los usuarios:
 
 ---
 
-## 🛠️ Tecnologías
+## Contenido del Proyecto
 
 ### Frontend
 - **HTML5** - Estructura de las páginas
@@ -49,7 +49,7 @@ BAKIFLOW es una tienda en línea de ropa seminueva que permite a los usuarios:
 
 ---
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 ### Funcionalidades Principales (2 requeridas)
 1. **GET /productos** - Lista todos los productos disponibles
@@ -63,9 +63,9 @@ BAKIFLOW es una tienda en línea de ropa seminueva que permite a los usuarios:
 
 ---
 
-## 📦 Requisitos Previos
+## Requisitos Previos
 
-Antes de iniciar, asegúrate de tener instalado:
+Requisitos:
 
 - [x] **Docker Desktop** (para la base de datos)
   - Descarga: https://www.docker.com/products/docker-desktop/
@@ -91,23 +91,9 @@ conda --version
 
 ---
 
-## 🚀 Instalación y Configuración
+## Instalación y Configuración
 
-### PASO 1: Clonar/Descargar el Proyecto
-
-```bash
-# Si usas Git
-git clone https://github.com/tu-usuario/bakiflow.git
-cd bakiflow
-
-# O descomprime el archivo ZIP
-unzip bakiflow.zip
-cd bakiflow
-```
-
----
-
-### PASO 2: Inicializar la Base de Datos
+### Inicializar la Base de Datos
 
 La base de datos corre en Docker con PostgreSQL y pgAdmin.
 
@@ -117,7 +103,7 @@ docker-compose up -d
 ```
 
 **¿Qué hace esto?**
-- Descarga las imágenes de PostgreSQL y pgAdmin (primera vez)
+- Descarga las imágenes de PostgreSQL y pgAdmin por primera vez
 - Crea y levanta 2 contenedores:
   - `bakiflow_db` - PostgreSQL en puerto 5432
   - `bakiflow_pgadmin` - pgAdmin en puerto 8080
@@ -143,7 +129,7 @@ docker logs bakiflow_db
 1. Abre: http://localhost:8080
 2. Login:
    - Email: `admin@bakiflow.com`
-   - Password: `admin123`
+   - Password: `DinoBakiFlow`
 3. Conecta al servidor:
    - Host: `postgres`
    - Port: `5432`
@@ -152,11 +138,11 @@ docker logs bakiflow_db
 
 ---
 
-### PASO 3: Inicializar el Backend
+### Inicializar el Backend
 
 El backend es un servidor Flask que conecta el frontend con la base de datos.
 
-#### Opción A: Con Conda (recomendado)
+#### Con Conda
 
 ```bash
 # Crear entorno virtual
@@ -172,33 +158,14 @@ pip install -r requirements.txt
 python backend.py
 ```
 
-#### Opción B: Con venv (Python estándar)
-
-```bash
-# Crear entorno virtual
-python -m venv venv
-
-# Activar entorno
-# En Windows:
-venv\Scripts\activate
-# En Mac/Linux:
-source venv/bin/activate
-
-# Instalar dependencias
-pip install -r requirements.txt
-
-# Ejecutar el backend
-python backend.py
-```
-
 **Verificar que funciona:**
 
-Deberías ver en la terminal:
+Debemos ver en la terminal:
 
 ```
-🚀 Iniciando servidor BAKIFLOW...
-📍 Servidor corriendo en: http://localhost:3000
-📦 Endpoints disponibles:
+Iniciando servidor BAKIFLOW...
+Servidor corriendo en: http://localhost:3000
+Endpoints disponibles:
    - GET    /productos
    - GET    /productos/<id>
    - GET    /carrito
@@ -215,7 +182,7 @@ Deberías ver un JSON con los productos.
 
 ---
 
-### PASO 4: Inicializar el Frontend
+### Inicializar el Frontend
 
 El frontend son páginas HTML estáticas que se sirven con un servidor HTTP simple.
 
@@ -300,7 +267,7 @@ bakiflow/
 
 ---
 
-## 🌐 Endpoints del API
+## Endpoints del API
 
 ### 1. Obtener todos los productos
 
@@ -418,7 +385,7 @@ DELETE /carrito
 
 ---
 
-## 🗄️ Base de Datos
+## Base de Datos
 
 ### Tabla: productos
 
@@ -451,7 +418,7 @@ DELETE /carrito
 
 ---
 
-## 🐛 Solución de Problemas
+## Posibles complicaciones que se llegaron a tener
 
 ### Error: "No se pudo conectar a la base de datos"
 
@@ -500,27 +467,12 @@ pip install -r requirements.txt
 
 ---
 
-## 👥 Autores
+## Autor
 
-- **Tu Nombre** - Universidad Panamericana
-
----
-
-## 📝 Notas de Entrega
-
-### Cumplimiento de Requisitos
-
-✅ **Vista adicional:** `carrito.html` con su CSS y JavaScript  
-✅ **Funcionalidad backend:** 4 endpoints nuevos del carrito conectados a la BD  
-✅ **Script SQL:** `database/init.sql` crea tablas y datos iniciales  
-✅ **README.md:** Instrucciones completas de inicialización  
+- **María Fernanda Maldonado Melendez** - Universidad Panamericana
 
 ---
 
-## 📜 Licencia
 
-Este proyecto es de uso educativo para la Universidad Panamericana.
 
----
-
-**BAKIFLOW** - Segunda vida para tu estilo 🌱
+**BAKIFLOW** - Segunda vida para tu estilo

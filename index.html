@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAKIFLOW - Dale vida a la ropa nuevamente</title>
+    
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <!-- Encabezado de la página -->
+    <header>
+        <h1>🛍️ BAKIFLOW</h1>
+        <p class="subtitle">Dale vida a la ropa nuevamente</p>
+        <p class="description">Tienda de ropa seminueva de calidad</p>
+        <nav style="margin-top: 1rem;">
+            <a href="carrito.html" style="color: #3498db; font-size: 1.2rem; text-decoration: none;">
+                Ver Carrito
+            </a>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        
+        <!-- Lista de productos -->
+        <section id="lista-productos">
+            <h2>Catálogo de Ropa Seminueva</h2>
+            <p id="contador-productos">Cargando productos...</p>
+            
+            <!-- Aquí se insertarán los productos dinámicamente -->
+            <div id="productos-container"></div>
+        </section>
+
+        <!-- Detalle del producto (oculta por defecto) -->
+        <section id="detalle-producto" style="display: none;">
+            <button onclick="cerrarDetalle()">← Volver al catálogo</button>
+            
+            <div id="detalle-container">
+                <!-- Aquí se insertará el detalle del producto -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>BAKIFLOW © 2026 - Segunda vida para tu estilo</p>
+    </footer>
+
+    <!--Lógica de la aplicación -->
+    <script>
+       
+        // Variables globales
+     
+        const API_URL = 'http://127.0.0.1:3000';
+;  
+     
+        // FUNCIONALIDAD 1: Obtener los productos
+        
+        
+        async function cargarProductos() {
+            console.log('Cargando productos desde el backend...');
+            
+            try {
+          
+                const response = await fetch(`${API_URL}/productos`);
+                
+       
+                const data = await response.json();
+                
+                console.log('Productos recibidos:', data);
+                
+                // Verificar si la petición fue exitosa
+                if (data.success) {
+                    mostrarProductos(data.productos);
+                    
+                    // Actualizar contador
+                    document.getElementById('contador-productos').textContent = 
+                        `Total de productos disponibles: ${data.count}`;
+                } else {
+                    console.error('Error:', data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error al cargar productos:', error);
+                document.getElementById('contador-productos').textContent = 
+                    'Error al cargar productos. ¿Está corriendo el backend?';
+            }
+        }
+        
+        // Función A: Mostrar productos en el HTML
+     
+        function mostrarProductos(productos) {
+            const container = document.getElementById('productos-container');
+            
+            // Limpiar contenedor
+            container.innerHTML = '';
+            
+            // Iterar sobre cada producto y crear su HTML
+            productos.forEach(producto => {
+                const productoDiv = document.createElement('div');
+                productoDiv.className = 'producto-card';
+                
+                // Crear HTML del producto
+                productoDiv.innerHTML = `
+                    <img src="${producto.imagen_url}" 
+                         alt="${producto.nombre}"
+                         onerror="this.src='https://via.placeholder.com/300x300?text=Sin+Imagen'">
+                    
+                    <h3>${producto.nombre}</h3>
+                    <p class="categoria">${producto.categoria} - Talla ${producto.talla}</p>
+                    <p class="precio">$${parseFloat(producto.precio).toFixed(2)} MXN</p>
+                    <p class="condicion">Condición: ${producto.condicion}</p>
+                    <p class="stock">Stock: ${producto.stock} disponibles</p>
+                    
+                    <button onclick="verDetalle(${producto.id})">
+                        Ver Detalle Completo
+                    </button>
+                    <button onclick="agregarAlCarrito(${producto.id})" style="background-color: #27ae60; margin-top: 0.5rem;">
+                        🛒 Agregar al Carrito
+                    </button>
+                `;
+                
+                container.appendChild(productoDiv);
+            });
+        }
+        
+     
+        // FUNCIONALIDAD 2: Obtener detalles de un producto
+
+        
+        async function verDetalle(id) {
+            console.log(`🔍 Buscando detalle del producto ID: ${id}`);
+            
+            try {
+                // Petición GET al backend con el ID específico
+                const response = await fetch(`${API_URL}/productos/${id}`);
+                const data = await response.json();
+                
+                console.log('Detalle recibido:', data);
+                
+                if (data.success) {
+                    mostrarDetalle(data.producto);
+                } else {
+                    alert('Error: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error al cargar detalle:', error);
+                alert('Error al cargar el detalle del producto');
+            }
+        }
+        
+
+        // Función A: Mostrar detalle del producto
+
+        function mostrarDetalle(producto) {
+            // Ocultar lista de productos
+            document.getElementById('lista-productos').style.display = 'none';
+            
+            // Mostrar sección de detalle
+            document.getElementById('detalle-producto').style.display = 'block';
+            
+            // Insertar información del producto
+            const detalleContainer = document.getElementById('detalle-container');
+            detalleContainer.innerHTML = `
+                <div class="detalle-completo">
+                    <img src="${producto.imagen_url}" 
+                         alt="${producto.nombre}"
+                         class="imagen-grande"
+                         onerror="this.src='https://via.placeholder.com/600x600?text=Sin+Imagen'">
+                    
+                    <div class="info-detalle">
+                        <h2>${producto.nombre}</h2>
+                        
+                        <p class="precio-grande">$${parseFloat(producto.precio).toFixed(2)} MXN</p>
+                        
+                        <div class="caracteristicas">
+                            <p><strong>📦 Categoría:</strong> ${producto.categoria}</p>
+                            <p><strong>📏 Talla:</strong> ${producto.talla}</p>
+                            <p><strong>⭐ Condición:</strong> ${producto.condicion}</p>
+                            <p><strong>✅ Disponible:</strong> ${producto.disponible ? 'Sí' : 'No'}</p>
+                        </div>
+                        
+                        <div class="descripcion">
+                            <h3>Descripción</h3>
+                            <p>${producto.descripcion}</p>
+                        </div>
+                        
+                        <button class="btn-comprar">Agregar al carrito</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // F: Cerrar detalle y volver a la lista
+     
+        function cerrarDetalle() {
+            document.getElementById('detalle-producto').style.display = 'none';
+            document.getElementById('lista-productos').style.display = 'block';
+        }
+        
+      
+        // Ejecución
+     
+        
+        // Cuando el DOM esté listo, cargar los productos
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('BAKIFLOW cargado');
+            cargarProductos();  // Llama la función que carga productos
+        });
+        
+      // Agregar al carrito
+        async function agregarAlCarrito(productoId) {
+            console.log(`Agregando producto ${productoId} al carrito`);
+            
+            try {
+                const response = await fetch(`${API_URL}/carrito`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        producto_id: productoId,
+                        cantidad: 1
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Producto agregado al carrito!');
+                } else {
+                    alert('Error: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error al agregar al carrito:', error);
+                alert('Error al agregar el producto');
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>
