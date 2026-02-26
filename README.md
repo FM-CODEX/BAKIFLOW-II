@@ -183,7 +183,7 @@ Deberías ver un JSON con los productos.
 
 El frontend son páginas HTML estáticas que se sirven con un servidor HTTP simple.
 
-#### Opción A: Con Python (recomendado)
+#### Primera Opción
 
 ```bash
 # Abrir NUEVA TERMINAL (deja el backend corriendo)
@@ -198,17 +198,13 @@ python -m http.server 8000
 python3 -m http.server 8000
 ```
 
-#### Opción B: Con Node.js (si lo tienes)
+#### Segunda opción: Con Node.js (si lo tienes)
 
 ```bash
 npx http-server -p 8000
+
+### Por el momento lo hice con la primera opción
 ```
-
-#### Opción C: Con Live Server (VSCode)
-
-1. Instala la extensión "Live Server"
-2. Click derecho en `index.html`
-3. "Open with Live Server"
 
 **Verificar que funciona:**
 
@@ -241,7 +237,7 @@ python -m http.server 8000
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 bakiflow/
